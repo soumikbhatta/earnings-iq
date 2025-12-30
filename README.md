@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EarningsIQ
 
-## Getting Started
+Multi-agent AI system for earnings call analysis using LangGraph, Temporal, and Next.js 15.
 
-First, run the development server:
+## Overview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+EarningsIQ leverages a sophisticated multi-agent architecture to process and analyze corporate earnings calls in real-time. By combining the durability of Temporal workflows with the intelligence of Claude-powered agents, it provides deep financial insights, sentiment analysis, and trend identification.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
+- **Database & Auth**: [Supabase](https://supabase.com/)
+- **ORCHESTRATION**: [Temporal](https://temporal.io/)
+- **Agent Framework**: [LangGraph](https://langchain-ai.github.io/langgraph/)
+- **LLM**: Claude 3.5 Sonnet (Anthropic API)
+- **UI Components**: shadcn/ui & Tailwind CSS v4
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Setup Instructions
 
-## Learn More
+### Prerequisites
 
-To learn more about Next.js, take a look at the following resources:
+- Node.js (v20+)
+- Temporal Server (local or cloud)
+- Supabase Project
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Installation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/soumikbhatta/earnings-iq.git
+   cd earnings-iq
+   ```
 
-## Deploy on Vercel
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. Configure environment variables:
+   Copy `.env.example` to `.env.local` and fill in your credentials.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4. Run the development server:
+   ```bash
+   npm run dev
+   ```
+
+## Architecture
+
+EarningsIQ uses a modular architecture where specialized agents handle different aspects of financial analysis, coordinated through LangGraph and ensured by Temporal's durable execution.
