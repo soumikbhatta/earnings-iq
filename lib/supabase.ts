@@ -12,7 +12,7 @@ export interface Signal {
     ticker: string
     signal_type: 'earnings_beat' | 'earnings_miss' | 'revenue_growth' | 'sentiment_shift' | 'other'
     confidence: number
-    metadata: Record<string, any>
+    metadata: Record<string, unknown>
     source: string
     status: 'active' | 'processed' | 'archived'
 }
@@ -25,7 +25,7 @@ export interface AnalysisJob {
     workflow_id: string
     status: 'pending' | 'running' | 'completed' | 'failed'
     progress: number
-    result: Record<string, any> | null
+    result: Record<string, unknown> | null
     error: string | null
 }
 
