@@ -50,16 +50,16 @@ export default function Home() {
               <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center mb-4">
                 <Workflow className="w-6 h-6 text-white" />
               </div>
-              <CardTitle className="text-2xl">Temporal Workflows</CardTitle>
+              <CardTitle className="text-2xl">Job Queue Processing</CardTitle>
               <CardDescription className="text-base">
-                Reliable, scalable workflow orchestration powered by Temporal for complex analysis pipelines
+                Reliable, scalable job processing powered by BullMQ with Redis for complex analysis pipelines
               </CardDescription>
             </CardHeader>
             <CardContent>
               <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-400">
-                <li>• Durable execution</li>
+                <li>• Distributed processing</li>
                 <li>• Automatic retries</li>
-                <li>• Workflow visibility</li>
+                <li>• Job progress tracking</li>
               </ul>
             </CardContent>
           </Card>

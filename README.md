@@ -1,17 +1,18 @@
 # EarningsIQ
 
-Multi-agent AI system for earnings call analysis using LangGraph, Temporal, and Next.js 15.
+Multi-agent AI system for earnings call analysis using LangGraph, BullMQ, and Next.js 16.
 
 ## Overview
 
-EarningsIQ leverages a sophisticated multi-agent architecture to process and analyze corporate earnings calls in real-time. By combining the durability of Temporal workflows with the intelligence of Claude-powered agents, it provides deep financial insights, sentiment analysis, and trend identification.
+EarningsIQ leverages a sophisticated multi-agent architecture to process and analyze corporate earnings calls in real-time. By combining reliable job queue processing with BullMQ and the intelligence of Claude-powered agents, it provides deep financial insights, sentiment analysis, and trend identification.
 
 ## Tech Stack
 
-- **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
+- **Framework**: [Next.js 16](https://nextjs.org/) (App Router)
 - **Database & Auth**: [Supabase](https://supabase.com/)
-- **ORCHESTRATION**: [Temporal](https://temporal.io/)
-- **Agent Framework**: [LangGraph](https://langchain-ai.github.io/langgraph/)
+- **Job Queue**: [BullMQ](https://docs.bullmq.io/) with Redis
+- **Vector DB**: [Qdrant](https://qdrant.tech/)
+- **Agent Framework**: [LangGraph](https://langchain-ai.github.io/langgraph/) (planned)
 - **LLM**: Claude 3.5 Sonnet (Anthropic API)
 - **UI Components**: shadcn/ui & Tailwind CSS v4
 
@@ -20,7 +21,7 @@ EarningsIQ leverages a sophisticated multi-agent architecture to process and ana
 ### Prerequisites
 
 - Node.js (v20+)
-- Temporal Server (local or cloud)
+- Docker (for Redis and Qdrant)
 - Supabase Project
 
 ### Installation
@@ -36,14 +37,24 @@ EarningsIQ leverages a sophisticated multi-agent architecture to process and ana
    npm install
    ```
 
-3. Configure environment variables:
+3. Start infrastructure services:
+   ```bash
+   npm run docker:up
+   ```
+
+4. Configure environment variables:
    Copy `.env.example` to `.env.local` and fill in your credentials.
 
-4. Run the development server:
+5. Start the development server:
    ```bash
    npm run dev
    ```
 
+6. Start the BullMQ worker (in a separate terminal):
+   ```bash
+   npm run worker
+   ```
+
 ## Architecture
 
-EarningsIQ uses a modular architecture where specialized agents handle different aspects of financial analysis, coordinated through LangGraph and ensured by Temporal's durable execution.
+EarningsIQ uses a modular architecture where specialized agents handle different aspects of financial analysis, coordinated through LangGraph and processed reliably with BullMQ job queues.
