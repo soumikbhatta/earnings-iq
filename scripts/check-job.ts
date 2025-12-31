@@ -1,9 +1,11 @@
+// TODO Phase 4: Enhance with real-time SSE updates
 import { earningsQueue } from '../lib/queue/queues'
 import * as dotenv from 'dotenv'
 
 dotenv.config({ path: '.env.local' })
 
 async function checkJob() {
+    // TODO: Accept job ID as CLI argument (e.g., process.argv[2])
     const jobId = '5'
     console.log(`Checking status for Job ${jobId}...`)
 

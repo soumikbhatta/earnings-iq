@@ -33,6 +33,8 @@ async function processEarningsJob(job: Job<TranscriptJobData, AnalysisResult>) {
         // Ensure graph is loaded
         const graph = await getEarningsGraph()
 
+        // TODO Phase 4: Replace with real transcript fetching API
+        // TODO Phase 4: Replace with real transcript fetching API (Financial Modeling Prep or similar)
         // Simulate fetching transcript (mock data for now)
         const mockTranscript = `
       Operator: Good day and welcome to the ${job.data.ticker} Q4 2024 Earnings Call.
