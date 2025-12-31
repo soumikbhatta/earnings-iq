@@ -4,18 +4,18 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-slate-900 dark:to-indigo-950">
+    <div className="min-h-screen bg-linear-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-slate-900 dark:to-indigo-950">
       <main className="container mx-auto px-4 py-16">
         {/* Header Section */}
         <div className="text-center mb-16">
-          <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-6">
+          <h1 className="text-5xl md:text-7xl font-bold bg-linear-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-6">
             EarningsIQ
           </h1>
           <p className="text-xl md:text-2xl text-slate-700 dark:text-slate-300 max-w-3xl mx-auto mb-8">
             AI-powered earnings analysis with multi-agent workflows and real-time signals
           </p>
           <div className="flex gap-4 justify-center">
-            <Button size="lg" className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700">
+            <Button size="lg" className="bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700">
               Get Started
             </Button>
             <Button size="lg" variant="outline">
@@ -28,7 +28,7 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           <Card className="border-2 border-blue-100 dark:border-blue-900 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
             <CardHeader>
-              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center mb-4">
+              <div className="w-12 h-12 rounded-lg bg-linear-to-br from-blue-500 to-indigo-500 flex items-center justify-center mb-4">
                 <Brain className="w-6 h-6 text-white" />
               </div>
               <CardTitle className="text-2xl">Multi-Agent Analysis</CardTitle>
@@ -47,7 +47,7 @@ export default function Home() {
 
           <Card className="border-2 border-indigo-100 dark:border-indigo-900 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
             <CardHeader>
-              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center mb-4">
+              <div className="w-12 h-12 rounded-lg bg-linear-to-br from-indigo-500 to-purple-500 flex items-center justify-center mb-4">
                 <Workflow className="w-6 h-6 text-white" />
               </div>
               <CardTitle className="text-2xl">Job Queue Processing</CardTitle>
@@ -66,7 +66,7 @@ export default function Home() {
 
           <Card className="border-2 border-purple-100 dark:border-purple-900 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
             <CardHeader>
-              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center mb-4">
+              <div className="w-12 h-12 rounded-lg bg-linear-to-br from-purple-500 to-pink-500 flex items-center justify-center mb-4">
                 <Zap className="w-6 h-6 text-white" />
               </div>
               <CardTitle className="text-2xl">Real-time Signals</CardTitle>
