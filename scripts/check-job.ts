@@ -4,7 +4,7 @@ import * as dotenv from 'dotenv'
 dotenv.config({ path: '.env.local' })
 
 async function checkJob() {
-    const jobId = '1'
+    const jobId = '5'
     console.log(`Checking status for Job ${jobId}...`)
 
     const job = await earningsQueue.getJob(jobId)
