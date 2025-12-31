@@ -31,9 +31,15 @@ export async function triggerAnalysis(ticker: string) {
                 progress: 0
             })
 
-        // Ignore DB error if table doesn't exist yet (for dev iteration speed)
+        // Handle DB error - job is still enqueued, but tracking record failed
         if (dbError) {
-            console.warn('[Server Action] Failed to save to DB (table might missing):', dbError.message)
+            console.warn('[Server Action] Failed to save to DB (table might be missing):', dbError.message)
+            return {
+                success: true,
+                jobId: job.id,
+                message: `Analysis started for ${capsTicker}`,
+                warning: `Job enqueued but database tracking failed: ${dbError.message}`
+            }
         }
 
         return {
@@ -46,7 +52,10 @@ export async function triggerAnalysis(ticker: string) {
         console.error('Failed to trigger analysis:', error)
         return {
             success: false,
-            error: error instanceof Error ? error.message : 'Unknown error'
+            error: {
+                message: error instanceof Error ? error.message : 'Unknown error',
+                timestamp: new Date().toISOString()
+            }
         }
     }
 }
