@@ -1,6 +1,24 @@
+import * as dotenv from 'dotenv'
+dotenv.config({ path: '.env.local' })
+
 import { Worker, Job } from 'bullmq'
 import { connection } from '../lib/queue/connection'
 import { TranscriptJobData, AnalysisResult } from '../lib/queue/jobs'
+import { AgentState } from '../src/agents/schemas'
+
+console.log('[Worker] Starting up...')
+
+// Lazy load graph to ensure dotenv loads first and avoid top-level await issues in CJS
+let earningsGraph: any = null
+
+async function getEarningsGraph() {
+    if (earningsGraph) return earningsGraph
+    // Dynamic import
+    const mod = await import('../src/agents/graph')
+    earningsGraph = mod.earningsGraph
+    console.log('[Worker] Agent Graph loaded successfully.')
+    return earningsGraph
+}
 
 /**
  * Process a single earnings transcript job
@@ -12,33 +30,61 @@ async function processEarningsJob(job: Job<TranscriptJobData, AnalysisResult>) {
     await job.updateProgress(10)
 
     try {
-        // Simulate processing steps
-        console.log(`[Job ${job.id}] Fetching transcript...`)
-        await new Promise(resolve => setTimeout(resolve, 1000))
-        await job.updateProgress(30)
+        // Ensure graph is loaded
+        const graph = await getEarningsGraph()
+
+        // Simulate fetching transcript (mock data for now)
+        const mockTranscript = `
+      Operator: Good day and welcome to the ${job.data.ticker} Q4 2024 Earnings Call.
+      CEO: We are thrilled to report record revenue of $50B, up 20% YoY. 
+           However, we see some headwinds in the APAC region.
+           Our EPS came in at $3.50, beating expectations of $3.20.
+           We are raising guidance for next fiscal year to $55B-$60B.
+      Analyst: Can you speak to the margins?
+      CFO: Margins expanded by 200 basis points due to operational efficiencies.
+      CEO: AI adoption is accelerating faster than anticipated.
+    `
 
         console.log(`[Job ${job.id}] Running LangGraph agents...`)
-        await new Promise(resolve => setTimeout(resolve, 2000))
-        await job.updateProgress(70)
+        await job.updateProgress(30)
 
-        console.log(`[Job ${job.id}] Storing results in vector DB...`)
-        await new Promise(resolve => setTimeout(resolve, 1000))
-        await job.updateProgress(100)
+        // Invoke the agent graph
+        // Cast to AgentState
+        const resultState = await graph.invoke({
+            ticker: job.data.ticker,
+            transcript: mockTranscript
+        } as any) as unknown as AgentState
 
-        // Return dummy result
-        return {
+        console.log(`[Job ${job.id}] Graph execution complete.`)
+        await job.updateProgress(90)
+
+        // Map sentiment label from Agent schema
+        let sentimentLabel: 'positive' | 'negative' | 'neutral' = 'neutral'
+        const agentSentiment = resultState.sentiment?.sentiment
+        if (agentSentiment === 'bullish') sentimentLabel = 'positive'
+        if (agentSentiment === 'bearish') sentimentLabel = 'negative'
+
+        // Map graph state to AnalysisResult
+        const analysisResult: AnalysisResult = {
             sentiment: {
-                score: 0.85,
-                label: 'positive',
+                score: resultState.sentiment?.confidence || 0,
+                label: sentimentLabel,
             },
-            confidence: 0.92,
+            confidence: resultState.prediction?.confidence || 0,
             keyPoints: [
-                'Revenue beat expectations by 5%',
-                'Guidance raised for next fiscal year',
-                'CEO emphasized AI adoption'
+                `Revenue: ${resultState.metrics?.revenue}`,
+                `Earnings: ${resultState.metrics?.earnings}`,
+                `Guidance: ${resultState.metrics?.guidance}`,
+                `Prediction: ${resultState.prediction?.direction?.toUpperCase()}`,
+                ...(resultState.prediction?.keyFactors || [])
             ],
-            prediction: 'beat'
-        } as AnalysisResult
+            prediction: resultState.prediction?.direction === 'up' ? 'beat' :
+                resultState.prediction?.direction === 'down' ? 'miss' : 'inline'
+        }
+
+        // Save final result
+        await job.updateProgress(100)
+        return analysisResult
 
     } catch (error) {
         console.error(`[Job ${job.id}] Failed:`, error)
