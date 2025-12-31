@@ -9,6 +9,3 @@ export const model = new ChatGroq({
     model: 'llama-3.3-70b-versatile',
     temperature: 0.1,
 })
-
-console.log("🤖 Groq API Initialized with model: llama-3.3-70b-versatile")
-console.log("🔑 Using API key:", process.env.GROQ_API_KEY?.slice(0, 10) + "...")
